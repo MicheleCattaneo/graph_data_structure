@@ -1,5 +1,7 @@
 # DataStructure used to represent a Graph
 # Input: a List of Tuples representing a connection
+# Author: Michele Cattaneo, 2020
+
 class Node:
     def __init__(self, name, number):
         self.name = name
@@ -22,6 +24,7 @@ class Graph:
         self.mapped_nodes = self.mapNode()
         #An array of sets, mapping each node number to the set of its neighborhood
         self.neighbors = self.makeNeighbors()
+
 
     # Array<tuple<char>> -> Int
     # returns the number of edges for the given input
@@ -82,11 +85,32 @@ class Graph:
     def getNeighbors(self, node):
         return self.neighbors[self.getNumber(node)]
 
+    # Nothing -> Int[][]
+    # Returns the adjecency matrix of the graph
+    def getMatrix(self):
+        matrix = [[0 for x in range(self.nodes_number)] for y in range(self.nodes_number)]
+        for edge in self.edges:
+            source = self.getNumber(edge[0])
+            dest = self.getNumber(edge[1])
+            matrix[source][dest] = 1
+        return matrix
+
+    def printMatrix(self, M):
+        for row in range(len(M)):
+            for col in range (len(M[0])):
+                print(M[row][col]," ", end='')
+            print("")
+
+
+
+
 # Testing area
 graph = Graph([('A', 'B'), ('B', 'C'), ('B', 'D'), ('C', 'D'), ('E', 'F'), ('F', 'C')])
+
 print(graph.getNeighbors('A'))
 print(graph.getNeighbors('B'))
 print(graph.getNeighbors('C'))
 print(graph.getNeighbors('D'))
 print(graph.getNeighbors('E'))
 print(graph.getNeighbors('F'))
+graph.printMatrix(graph.getMatrix())
